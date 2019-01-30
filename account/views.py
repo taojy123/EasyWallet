@@ -33,11 +33,12 @@ def login(request):
         if not token:
             token = uuid.uuid4().hex
 
+        if Wallet.objects.filter(token=token).exists():
+            w = Wallet.objects.filter(token=token).first()
+            return HttpResponseRedirect('/?token=%s' % w.token)
+
         if Wallet.objects.filter(name=name).exists():
             return HttpResponseBadRequest('name 重复')
-
-        if Wallet.objects.filter(token=token).exists():
-            return HttpResponseBadRequest('token 重复')
 
         w = Wallet.objects.create(name=name, token=token)
 
