@@ -1,4 +1,4 @@
 #Python2.7
-django==1.11.17
+django>=1.11.17
 
 
